@@ -9,56 +9,58 @@ import java.util.concurrent.Future;
 public class Urna {
 	public static void main(String[] args) throws InterruptedException {
 		int[] array = {1, 2, 3, 4, 5};
-		String[] op = {"Dep. Estadual", "Dep. Federal", "Senador", "Governador", "Presidente"};
+		String[] op = {"Dep.Estadual", "Dep.Federal", "Senador", "Governador", "Presidente"};
 		
 		Scanner input = new Scanner(System.in);
 		
+		System.out.printf("\nCaso queira cancelar digite: 0\n\n", op[0]);
 		
-		System.out.printf("Voto para %s\nCaso queira cancelar digite: 0\n", op[0]);
+		System.out.printf("Voto para %s: [5 dígitos] ", op[0]);
 		Integer depEstadual = input.nextInt();
-		Voto voto = new Voto(depEstadual);
-		Thread votoCarrega = new Thread(voto, "1");
+		EstadualRun voto = new EstadualRun(depEstadual);
+		Thread votoEst = new Thread(voto, "1");
 		
-		votoCarrega.start();
+		votoEst.run();
 		
-		System.out.printf("Voto para %s\nCaso queira cancelar digite: 0\n", op[1]);
+		System.out.printf("Voto para %s: [4 dígitos] ", op[1]);
 		int depFederal = input.nextInt();
-		Voto voto1 = new Voto(depEstadual);
-		Thread votoCarrega1 = new Thread(voto, "1");
+		EstadualRun votoFederal = new EstadualRun(depFederal);
+		Thread votoFed = new Thread(votoFederal);
+
+		votoFed.run();
+
 		
-		votoCarrega1.run();
-		
-		System.out.printf("Voto para %s\nCaso queira cancelar digite: 0\n", op[2]);
+		System.out.printf("Voto para %s: [3 dígitos] ", op[2]);
 		int senador = input.nextInt();
-		Voto voto2 = new Voto(depEstadual);
-		Thread votoCarrega2 = new Thread(voto, "2");
+		EstadualRun votoSenador = new EstadualRun(senador);
+		Thread votoSen = new Thread(votoSenador);
+
+		votoSen.run();
 		
-		votoCarrega2.start();
-		
-		System.out.printf("Voto para %s\nCaso queira cancelar digite: 0\n", op[3]);
+		System.out.printf("Voto para %s: [2 dígitos] ", op[3]);
 		int governador = input.nextInt();
-		Voto voto3 = new Voto(depEstadual);
-		Thread votoCarrega3 = new Thread(voto, "3");
+		EstadualRun votoGovernador = new EstadualRun(governador);
+		Thread votoGov = new Thread(votoGovernador);
+
+		votoGov.run();
 		
-		votoCarrega3.start();
-		
-		System.out.printf("Voto para %s\nCaso queira cancelar digite: 0\n", op[4]);
+		System.out.printf("Voto para %s: [2 dígitos] ", op[4]);
 		int presidente = input.nextInt();
-		Voto voto4 = new Voto(depEstadual);
-		Thread votoCarrega4 = new Thread(voto, "4");
-		
-		votoCarrega2.start();
-		
+		EstadualRun votoPresidente = new EstadualRun(presidente);
+		Thread votoPre = new Thread(votoPresidente);
+
+		votoPre.run();
+
 		if(presidente == 22) presidente = 13;
 		
 		System.out.println("Seus votos: ");
-		System.out.printf("%s: %s\n%s: %s\n%s: %s\n%s: %s\n%s: %s\n", array[0], depEstadual, array[1], depFederal, array[2], senador, array[3], governador, array[4], presidente);
+		System.out.printf("%s: %s\n%s: %s\n%s: %s\n%s: %s\n%s: %s\n", op[0], depEstadual, op[1], depFederal, op[2], senador, op[3], governador, op[4], presidente);
 	}
 	
-	private static class Voto implements Runnable {
+	private static class EstadualRun implements Runnable {
 		private Integer voto;
 		
-		public Voto(Integer voto) {
+		public EstadualRun(Integer voto) {
 			this.voto = voto;
 		}
 		
@@ -71,29 +73,37 @@ public class Urna {
 			}
 			switch (voto) {
 			case 12345:
-				System.out.println("Zé de Neinha");
+				System.out.printf("Zé de Neinha\n\n");
 				break;
 			case 45123:
-				System.out.println("João Neves");
+				System.out.printf("João Neves\n\n");
 				break;
 			case 1234:
-				System.out.println("Luca Perdosa");
+				System.out.printf("Luca Perdosa\n\n");
 				break;
 			case 4545:
-				System.out.println("Junior Campos");
+				System.out.printf("Junior Campos\n\n");
 				break;
 			case 123:
-				System.out.println("Luciano Juba");
+				System.out.printf("Luciano Juba\n\n");
 				break;
 			case 454:
-				System.out.println("Geraldo Campos");
+				System.out.printf("Geraldo Campos\n\n");
 				break;
 			case 45:
-				System.out.println("João Campos");
+				System.out.printf("João Campos\n\n");
 				break;
 			case 12:
-				System.out.println("Mario Ricardo");
+				System.out.printf("Mario Ricardo\n\n");
+				break;
+			case 13:
+				System.out.printf("Luiz Inacio Lula\n\n");
+				break;
+			case 22:
+				System.out.printf("Jair Messias Bolsonaro\n\n");
+				break;
 			default:
+				System.out.printf("Nulo\n\n");
 				break;
 			}
 		}
